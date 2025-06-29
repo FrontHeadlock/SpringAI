@@ -2,8 +2,10 @@ package SpringAI.demo.domain;
 
 import jakarta.persistence.*;
 import java.util.UUID;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Member {
 
   @Id

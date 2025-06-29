@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/members")
 public class MemberController {
 
-  //로그인
-
   //회원가입
+
+
+  //로그인
 
 
   //조회
