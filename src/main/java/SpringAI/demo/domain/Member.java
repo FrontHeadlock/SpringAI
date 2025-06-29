@@ -1,6 +1,7 @@
-package SpringAI.demo.login;
+package SpringAI.demo.domain;
 
 import jakarta.persistence.*;
+import java.util.UUID;
 
 @Entity
 public class Member {
@@ -14,11 +15,15 @@ public class Member {
   private String username;
 
   //비밀번호
-  @Column(nullable = false, length = 20)
+  @Column(nullable = false)
   private String password;
 
+  //UUID
+//  @Column(unique = true, nullable = false, updatable = false)
+//  private UUID uuid = UUID.randomUUID();
+
   //닉네임
-  @Column(nullable = false, length = 30)
+  @Column(nullable = true, length = 30)
   private String name;
 
   //이메일
