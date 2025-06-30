@@ -9,6 +9,8 @@ public class AuthDTO {
       @NotBlank String password
   ){}
 
-  public static record LoginResponse(){}
+  public static record LoginResponse(
+      String token
+  ){}
 
 }
