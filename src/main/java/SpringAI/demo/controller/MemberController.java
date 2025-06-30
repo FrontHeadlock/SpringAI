@@ -26,11 +26,19 @@ public class MemberController {
 
   //이메일 인증 기반
   @PostMapping("/email/request")
-  public ResponseEntity<?> request(@RequestParam String email) {
+  public ResponseEntity<Void> request(@RequestParam String email) {
     emailService.request(email);
-    return ResponseEntity.ok("인증번호 전송 완료");
+    return ResponseEntity.ok().build();
   }
 
+  //이메일 검증
+  @PostMapping("/email/verify")
+  public ResponseEntity<Boolean> verifyCode(@RequestParam String email, @RequestParam String code) {
+    boolean result = emailService.verifyAuthCode(email, code);
+    return ResponseEntity.ok(result);
+  }
+
+  //회원가입
 
   //조회
 
