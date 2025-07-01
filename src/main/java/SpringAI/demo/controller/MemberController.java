@@ -50,6 +50,8 @@ public class MemberController {
   }
 
   //회원가입
+  @Operation(summary="SignUp API")
+  @PostMapping("/signUp")
   public ResponseEntity<ApiResponse> signUp(@RequestBody @Valid SignUpDTO dto) {
     memberService.signUp(dto); // 내부에서 PENDING 상태로 저장
 

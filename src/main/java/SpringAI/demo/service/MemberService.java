@@ -4,7 +4,6 @@ import SpringAI.demo.domain.Member;
 import SpringAI.demo.domain.MemberStatus;
 import SpringAI.demo.dto.SignUpDTO;
 import SpringAI.demo.repository.MemberRepository;
-import java.time.LocalDateTime;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

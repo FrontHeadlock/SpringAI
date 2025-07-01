@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -47,7 +48,7 @@ public class SecurityConfig {
 
     //csrf disable
     http
-        .csrf((auth) -> auth.disable());
+        .csrf(AbstractHttpConfigurer::disable);
 
     //cors 설정 (배포 X)
     http
@@ -66,7 +67,7 @@ public class SecurityConfig {
         .authorizeHttpRequests((auth)-> auth
             .requestMatchers("/swagger", "/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll() // Swagger 허용
             .requestMatchers("/login","/","/signUp").permitAll()
-            .anyRequest().authenticated()
+            .anyRequest().permitAll()
         );
 
     // jwt토큰 요청 감지, 해당 토큰 유효성 검사 (jwtFilter 등록)

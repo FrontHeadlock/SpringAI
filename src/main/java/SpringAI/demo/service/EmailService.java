@@ -22,7 +22,7 @@ public class EmailService {
   //이메일 인증 요청 로직
   public void request(String email){
     if (!email.endsWith("@catholic.ac.kr")) {
-      throw new IllegalArgumentException("학교 이메일이 아닙니다.");
+      throw new IllegalArgumentException("이메일 형식이 올바르지 않습니다");
     }
 
     String code = String.format("%06d", random.nextInt(1_000_000));
@@ -30,7 +30,7 @@ public class EmailService {
     // 이메일 발송
     SimpleMailMessage message = new SimpleMailMessage();
     message.setTo(email);
-    message.setSubject("카톡시 회원가입 인증 코드");
+    message.setSubject("회원가입 인증 코드");
     message.setText("인증 코드는 다음과 같습니다: " + code);
     mailSender.send(message);
 
