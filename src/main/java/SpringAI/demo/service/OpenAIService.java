@@ -1,5 +1,7 @@
 package SpringAI.demo.service;
 
+import SpringAI.demo.domain.ChatAi;
+import SpringAI.demo.repository.ChatRepository;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.ai.audio.transcription.AudioTranscriptionPrompt;
@@ -8,6 +10,7 @@ import org.springframework.ai.chat.memory.ChatMemory;
 import org.springframework.ai.chat.memory.ChatMemoryRepository;
 import org.springframework.ai.chat.memory.MessageWindowChatMemory;
 import org.springframework.ai.chat.messages.AssistantMessage;
+import org.springframework.ai.chat.messages.MessageType;
 import org.springframework.ai.chat.messages.SystemMessage;
 import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatResponse;
@@ -45,6 +48,7 @@ public class OpenAIService {
   private final OpenAiAudioSpeechModel openAiAudioSpeechModel;
   private final OpenAiAudioTranscriptionModel openAiAudioTranscriptionModel;
   private final ChatMemoryRepository chatMemoryRepository;
+  private final ChatRepository chatRepository;
 
   public String generate(String text) {
 
@@ -72,6 +76,12 @@ public class OpenAIService {
     //유저&페이지 별 ChatMemory 관리 위한 Key(우선은 명시적 적용)
     //추후 유저 아이디,변수로 저장 필요
     String userId = "xxxjjhhh" + "_" + "1";
+
+    //채팅 내역 저장
+    ChatAi chatAi = new ChatAi();
+    chatAi.setUserId(userId);
+    chatAi.setType(MessageType.USER);
+    chatAi.setContent(text);
 
     //챗 메모리로 메시지 관리
     ChatMemory chatMemory = MessageWindowChatMemory.builder()
@@ -107,6 +117,14 @@ public class OpenAIService {
 
           chatMemory.add(userId, new AssistantMessage(responseBuffer.toString()));
           chatMemoryRepository.saveAll(userId, chatMemory.get(userId));
+
+          //전체 대화 저장용
+          ChatAi chatAssistantAi = new ChatAi();
+          chatAssistantAi.setUserId(userId);
+          chatAssistantAi.setType(MessageType.ASSISTANT);
+          chatAssistantAi.setContent(text);
+
+          chatRepository.saveAll(List.of(chatAi, chatAssistantAi));
         });
   }
 
